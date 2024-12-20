@@ -84,28 +84,34 @@ idadeInput.addEventListener("change", (e)=> {
 // Validar senha
 
 let senhaInput = document.getElementById("senha");
-
 let senhaValor = "";
-senhaInput.addEventListener("input", (e)=> {
+
+// Salva o valor da senha e revalida a confirmação
+
+senhaInput.addEventListener("change", (e) => {
     senhaValor = e.target.value;
-})
+    validarConfirmacaoSenha(); 
+});
 
 let confirmasenhaInput = document.getElementById("confirma-senha");
-let confirmasenhaLabel = document.querySelector('label[for="confirma-senha"]');
-let confirmasenhaHelper = document.getElementById("confirma-senha-helper")
+let confirmasenhaHelper = document.getElementById("confirma-senha-helper");
 
+function validarConfirmacaoSenha() {
+    let valorConfirmacao = confirmasenhaInput.value;
 
-confirmasenhaInput.addEventListener("change", (e)=> {
-    let valor = Number(e.target.value);
-
-    if (valor != senhaValor) {
+    if (valorConfirmacao !== senhaValor) {
         confirmasenhaInput.classList.add("error");
         confirmasenhaInput.classList.remove("correct");
         confirmasenhaHelper.classList.add("visible");
-        confirmasenhaHelper.innerText = "ATENÇÃO, as senhas devem ser iguais";
+        confirmasenhaHelper.innerText = "ATENÇÃO: as senhas devem ser iguais";
     } else {
         confirmasenhaInput.classList.remove("error");
         confirmasenhaInput.classList.add("correct");
         confirmasenhaHelper.classList.remove("visible");
     }
-})
+}
+
+// Validação no campo de confirmação de senha
+confirmasenhaInput.addEventListener("change", () => {
+    validarConfirmacaoSenha();
+});
