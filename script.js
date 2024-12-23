@@ -67,6 +67,8 @@ let idadeInput = document.getElementById("idade");
 let idadeLabel = document.querySelector('label[for="idade"]');
 let idadeHelper = document.getElementById("idade-helper");
 
+mostrarPopup(idadeInput, idadeLabel);
+
 idadeInput.addEventListener("change", (e) => {
   let idade = Number(e.target.value);
 
@@ -87,7 +89,10 @@ let senhaHelper = document.getElementById("senha-helper");
 mostrarPopup(senhaInput, senhaLabel);
 
 let confirmasenhaInput = document.getElementById("confirma-senha");
+let confirmasenhaLabel = document.querySelector('label[for="confirma-senha"]');
 let confirmasenhaHelper = document.getElementById("confirma-senha-helper");
+
+mostrarPopup(confirmasenhaInput, confirmasenhaLabel);
 
 let senhaValor = ""; // Variável para armazenar o valor da senha principal
 
@@ -117,3 +122,44 @@ function validarConfirmacaoSenha() {
 confirmasenhaInput.addEventListener("change", () => {
   validarConfirmacaoSenha();
 });
+
+// Evitar envio do formulário
+
+// Função para verificar se todos os campos estão corretos antes do envio
+function validarFormulario() {
+  let formularioValido = true;
+
+  // Verifica o status de todos os campos
+  if (usernameInput.classList.contains("error")) {
+    formularioValido = false;
+  }
+  if (emailInput.classList.contains("error")) {
+    formularioValido = false;
+  }
+  if (idadeInput.classList.contains("error")) {
+    formularioValido = false;
+  }
+  if (senhaInput.classList.contains("error")) {
+    formularioValido = false;
+  }
+  if (confirmasenhaInput.classList.contains("error")) {
+    formularioValido = false;
+  }
+
+  return formularioValido;
+}
+
+// Evita o envio do formulário se algum campo for inválido
+let formulario = document.getElementById("formulario");
+
+formulario.addEventListener("submit", (e) => {
+  if (!validarFormulario()) {
+    e.preventDefault(); // Impede o envio do formulário
+
+    swal({
+      title: "ERRO",
+      text: "Preencha todos os campos corretamente",
+      icon: "error",
+      button: "OK",
+    });
+  }});
